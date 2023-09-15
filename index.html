@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Snippet Generator</title>
+</head>
+<head>
+    <style>
+        label {
+            text-align: center;
+            font-size: 20px; /* Adjust the font size as needed */
+        }
+        textarea {
+           width: 1200px; /* Set a fixed width or adjust as needed */
+           height: 100px; /* Set a fixed height or adjust as needed */
+        }
+
+         /* Define the height and scroll properties of the scrollable area */
+        .scrollable {
+            height: 300px; /* Adjust the height as needed */
+            overflow-y: scroll; /* Enable vertical scrolling */
+            border: 1px solid #ccc; /* Add a border for visual separation */
+        }
+
+        /* Optional: Style the content within the scrollable area */
+        .content {
+            padding: 10px;
+        }
+
+        /* Center the title */
+        h1 {
+            text-align: center;
+        }
+
+         /* Style the "Copied!" message */
+        #copyMessage {
+            color: green; /* Change the color to your preference */
+            display: none; /* Initially hide the message */
+        }
+    </style>
+</head>
+<body>
+<h1>Code Snippet Generator</h1>
+<form method="POST">
+    <label for="target_language">Select a programming language:</label>
+    <select name="target_language" id="target_language">
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+        <option value="dotnet">.NET</option>
+        <option value="php">PHP</option>
+        <option value="javascript">JavaScript</option>
+        <option value="sql">SQL</option>
+    </select>
+    <br><br>
+    <label for="user_input">Enter a description or task:</label>
+    <br><br>
+    <textarea name="user_input" rows="4" cols="100">{{ user_input }}</textarea>
+    <br><br>
+    <input type="submit" value="Generate Code Snippet">
+</form>
+{% if code_snippet %}
+<h2>Generated Code Snippet:</h2>
+<div class="scrollable">
+    <div class="content">
+        <pre>{{ code_snippet }}</pre>
+        <button id="copyButton" data-clipboard-text="{{ code_snippet }}">Copy Code</button>
+        <span id="copyMessage">Copied!</span>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+<script>
+    // Initialize Clipboard.js
+    new ClipboardJS('#copyButton');
+
+    // Optionally, add an event listener to show a copy success message
+    document.querySelector('#copyButton').addEventListener('click', function () {
+        var copyMessage = document.querySelector('#copyMessage');
+        copyMessage.style.display = 'inline'; // Display "Copied!" message
+        setTimeout(function () {
+            copyMessage.style.display = 'none'; // Hide the message after a few seconds
+        }, 2000); // Adjust the duration as needed
+    });
+</script>
+{% endif %}
+</body>
+</html>
+
+
